@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section" style="background-image: url('{% static 'images/bg_6.jpg' %}'); background-size: cover; background-position: center; height: 300px; color: white; text-align: center; padding: 60px 20px; position: relative;">
+	<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);"></div>
+	<div style="position: relative; z-index: 1;">
+		<p><a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">Home</a> <span>Shop</span></p>
+		<h1 style="font-size: 36px; margin-top: 10px;">Shop</h1>
+	</div>
+</div>
+
+<!-- Product Details Section -->
+<section style="padding: 60px 20px;">
+	<div style="max-width: 1200px; margin: 0 auto;">
+		<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+			<!-- Product Image -->
+			<div style="flex: 1; max-width: 50%; padding: 10px;">
+				<a href="{% static 'images/product-1.png' %}" style="display: block;">
+					<img src="{{ product.image.url }}" alt="Product Image" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+				</a>
+			</div>
+
+			<!-- Product Info -->
+			<div style="flex: 1; max-width: 50%; padding-left: 40px;">
+				<h3 style="font-size: 32px; font-weight: bold;">{{ product.name }}</h3>
+				<div style="margin-top: 10px; font-size: 14px;">
+					<span style="font-weight: bold; color: #FFD700;">5.0</span>
+					<div style="display: inline-block; margin-top: 5px;">
+						<span style="font-size: 18px; color: #FFD700;">&#9733;</span>
+						<span style="font-size: 18px; color: #FFD700;">&#9733;</span>
+						<span style="font-size: 18px; color: #FFD700;">&#9733;</span>
+						<span style="font-size: 18px; color: #FFD700;">&#9733;</span>
+						<span style="font-size: 18px; color: #FFD700;">&#9733;</span>
+					</div>
+					<p style="margin-top: 5px; font-size: 14px;">100 Reviews</p>
+					<p style="font-size: 14px;">500 Sold</p>
+				</div>
+				<p style="font-size: 24px; font-weight: bold; color: red; margin-top: 20px;">${{ product.price }}</p>
+				<p style="margin-top: 20px; font-size: 16px;">{{ product.description }}</p>
+
+				<div style="margin-top: 30px;">
+					<a href="{% url 'add_cart' product.pk %}" style="display: inline-block; padding: 12px 25px; background-color: #333; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px;">Add to Cart</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Tab Navigation -->
+		<div style="margin-top: 50px; text-align: center;">
+			<ul style="list-style: none; padding: 0; display: inline-block; font-size: 18px;">
+				<li style="display: inline-block; margin: 0 20px; padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; border-radius: 5px;" class="tab-item active" id="tab-description">Description</li>
+				<li style="display: inline-block; margin: 0 20px; padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; border-radius: 5px;" class="tab-item" id="tab-manufacturer">Manufacturer</li>
+				<li style="display: inline-block; margin: 0 20px; padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; border-radius: 5px;" class="tab-item" id="tab-reviews">Reviews</li>
+			</ul>
+		</div>
+
+		<!-- Tab Content -->
+		<div style="margin-top: 30px; padding: 30px; background-color: #f9f9f9; border-radius: 5px;">
+			<div id="content-description" style="display: block;">
+				<h3>{{ product.name }}</h3>
+				<p>{{ product.description }}</p>
+			</div>
+
+			<div id="content-manufacturer" style="display: none;">
+				<h3>Manufactured By {{ product.manufacturer }}</h3>
+				<p>Details about the manufacturer and their processes...</p>
+			</div>
+
+			<div id="content-reviews" style="display: none;">
+				<div style="margin-top: 20px;">
+					<div style="display: flex; margin-bottom: 30px;">
+						<div style="display: flex; align-items: center; margin-right: 15px;">
+							<div style="width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; background-image: url({% static 'images/person_1.jpg' %});"></div>
+							<div style="font-weight: bold; font-size: 18px; margin-left: 10px;">Jacob Webb</div>
+						</div>
+						<div>
+							<span style="color: #FFD700;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+						</div>
+					</div>
+					<p style="font-size: 16px; margin-top: 10px;">When she reached the first hills of the Italic Mountains...</p>
+				</div>
+
+				<div style="margin-top: 20px;">
+					<div style="display: flex; margin-bottom: 30px;">
+						<div style="display: flex; align-items: center; margin-right: 15px;">
+							<div style="width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; background-image: url({% static 'images/person_2.jpg' %});"></div>
+							<div style="font-weight: bold; font-size: 18px; margin-left: 10px;">John Doe</div>
+						</div>
+						<div>
+							<span style="color: #FFD700;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+						</div>
+					</div>
+					<p style="font-size: 16px; margin-top: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+				</div>
+
+				<!-- Review Form -->
+				<div style="margin-top: 40px;">
+					<h3>Give a Review</h3>
+					<div style="margin-top: 20px;">
+						<span style="font-size: 25px; color: #FFD700; margin-right: 5px; cursor: pointer;">&#9733;</span>
+						<span style="font-size: 25px; color: #FFD700; margin-right: 5px; cursor: pointer;">&#9733;</span>
+						<span style="font-size: 25px; color: #FFD700; margin-right: 5px; cursor: pointer;">&#9733;</span>
+						<span style="font-size: 25px; color: #FFD700; margin-right: 5px; cursor: pointer;">&#9733;</span>
+						<span style="font-size: 25px; color: #FFD700; margin-right: 5px; cursor: pointer;">&#9733;</span>
+					</div>
+					<textarea placeholder="Write your review..." style="width: 100%; height: 100px; margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+					<button type="submit" style="display: inline-block; padding: 10px 25px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px;">Submit Review</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

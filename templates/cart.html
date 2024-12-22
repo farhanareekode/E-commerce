@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="bg-cover bg-center h-64 flex items-center justify-center" style="background-image: url({% static 'images/bg_6.jpg' %});">
+	<div class="text-center text-white">
+		<p class="text-sm">
+			<a href="{% url 'home' %}" class="hover:underline">Home</a> / <span>Cart</span>
+		</p>
+		<h1 class="text-3xl font-bold">My Wishlist</h1>
+	</div>
+</div>
+
+{% if error_message %}
+<script>
+	alert("{{ error_message }}");
+</script>
+{% endif %}
+
+<section class="py-10 bg-gray-100">
+	{% if item_items %}
+	<div class="container mx-auto">
+		<div class="overflow-x-auto">
+			<table class="min-w-full bg-white border rounded-lg shadow-sm">
+				<thead class="bg-gray-200">
+				<tr>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Remove</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Image</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Product</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Price</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Quantity</th>
+					<th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase">Total</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for p in item_items %}
+				<tr class="border-t">
+					<td class="px-6 py-4 text-center">
+						<a href="{% url 'cart_delete' p.product.id %}" class="text-red-500 hover:text-red-700">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						</a>
+					</td>
+					<td class="px-6 py-4">
+						<div class="w-16 h-16 bg-center bg-cover rounded-lg" style="background-image:url({{ p.product.image.url }});"></div>
+					</td>
+					<td class="px-6 py-4">
+						<h3 class="font-medium">{{ p.product.name }}</h3>
+						<p class="text-sm text-gray-500">{{ p.product.description|truncatewords:3 }}</p>
+					</td>
+					<td class="px-6 py-4">${{ p.product.price }}</td>
+					<td class="px-6 py-4">
+						<div class="flex items-center space-x-2">
+							<a href="{% url 'min_cart' p.product.id %}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded px-3 py-1">-</a>
+							<input type="text" value="{{ p.quantity }}" readonly class="w-12 text-center border rounded">
+							<a href="{% url 'add_cart' p.product.id %}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded px-3 py-1">+</a>
+						</div>
+					</td>
+					<td class="px-6 py-4">${{ p.product_total }}</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div class="mt-10 flex justify-center">
+			<div class="bg-white shadow-lg p-6 rounded-lg w-full max-w-md">
+				<h3 class="text-xl font-semibold mb-4 text-center">Cart Totals</h3>
+				<p class="flex justify-between mb-2">
+					<span>Subtotal</span>
+					<span>${{ total }}</span>
+				</p>
+				<p class="flex justify-between mb-2">
+					<span>Delivery</span>
+					<span>$0.00</span>
+				</p>
+				<p class="flex justify-between mb-2">
+					<span>Discount</span>
+					<span>$0.00</span>
+				</p>
+				<p class="flex justify-between mb-4">
+					<span>Total Quantity</span>
+					<span>{{ count }}</span>
+				</p>
+				<hr class="my-2">
+				<p class="flex justify-between font-bold">
+					<span>Total</span>
+					<span>${{ total }}</span>
+				</p>
+				<div class="mt-6 md:mt-8 text-center">
+					<a href="{% url 'checkout' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded shadow">Proceed to Checkout</a>
+				</div>
+			</div>
+		</div>
+
+		{% else %}
+	<div class="text-center py-20">
+		<h2 class="text-2xl font-semibold mb-4">No Products in Your Cart</h2>
+		<p class="text-gray-600">Start shopping to add items to your cart!</p>
+	</div>
+	{% endif %}
+	</section>
+{% endblock %}

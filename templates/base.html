@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minshopzz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="bg-gray-800 text-white">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="text-2xl font-bold">Minishop</a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="lg:hidden text-white focus:outline-none" id="menu-toggle">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden lg:flex items-center space-x-6" id="desktop-menu">
+            <a href="{% url 'home' %}" class="hover:text-gray-300">Home</a>
+            <div class="relative">
+                <button id="categoriesButton" class="hover:text-gray-300">Categories</button>
+                <div id="categoriesMenu"
+                     class="absolute left-0 mt-2 hidden bg-white text-gray-800 rounded-md shadow-lg z-50">
+                    {% for p in categories %}
+                    <a href="{{ p.get_category_url }}" class="block px-4 py-2 hover:bg-gray-200">{{ p.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+            <a href="#" class="hover:text-gray-300">User: {{ user.username }}</a>
+            <a href="{% url 'logout' %}" class="hover:text-gray-300">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="hover:text-gray-300">Login</a>
+            <a href="{% url 'register' %}" class="hover:text-gray-300">Register</a>
+            {% endif %}
+            <a href="{% url 'about' %}" class="hover:text-gray-300">About</a>
+            <a href="{% url 'blog' %}" class="hover:text-gray-300">Blog</a>
+            <a href="{% url 'contact' %}" class="hover:text-gray-300">Contact</a>
+            <a href="{% url 'cart_details' %}" class="hover:text-gray-300 flex items-center">
+                <!-- Shopping Cart Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8.4a1 1 0 001 1.6h8a1 1 0 001-1.6L17 13M10 21h4M7 6h.01M10 6h.01M13 6h.01M16 6h.01" />
+                </svg>
+                <span>Cart</span>
+            </a>
+            <button id="search-toggle" class="text-white hover:text-gray-300">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Links -->
+    <div class="lg:hidden hidden flex flex-col space-y-4 px-4" id="mobile-menu">
+        <a href="{% url 'home' %}" class="hover:text-gray-300 text-left">Home</a>
+        <div class="relative">
+            <button id="categoriesButton-mobile" class="hover:text-gray-300 text-left w-full text-left">Categories</button>
+            <div id="categoriesMenu-mobile" class="hidden bg-white text-gray-800 rounded-md shadow-lg mt-2">
+                {% for p in categories %}
+                <a href="{{ p.get_category_url }}" class="block px-4 py-2 hover:bg-gray-200">{{ p.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        <a href="#" class="hover:text-gray-300 text-left">User: {{ user.username }}</a>
+        <a href="{% url 'logout' %}" class="hover:text-gray-300 text-left">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="hover:text-gray-300 text-left">Login</a>
+        <a href="{% url 'register' %}" class="hover:text-gray-300 text-left">Register</a>
+        {% endif %}
+        <a href="{% url 'about' %}" class="hover:text-gray-300 text-left">About</a>
+        <a href="{% url 'blog' %}" class="hover:text-gray-300 text-left">Blog</a>
+        <a href="{% url 'contact' %}" class="hover:text-gray-300 text-left">Contact</a>
+        <a href="{% url 'cart_details' %}" class="hover:text-gray-300 flex items-center">
+            <!-- Shopping Cart Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8.4a1 1 0 001 1.6h8a1 1 0 001-1.6L17 13M10 21h4M7 6h.01M10 6h.01M13 6h.01M16 6h.01" />
+            </svg>
+            <span>Cart</span>
+        </a>
+
+
+
+        <!-- Search Option -->
+        <button id="search-toggle-mobile" class="text-left text-gray-300 w-full mt-4">
+            <i class="fas fa-search mr-2"></i> Search
+        </button>
+        <div id="mobile-search-bar" class="hidden mt-2">
+            <form action="search" method="get" class="flex items-center space-x-2">
+                <input type="text" name="search_word" placeholder="Search..." class="px-4 py-2 w-full rounded-md focus:outline-none">
+                <button type="submit" class="bg-blue-500 px-4 py-2 rounded-md text-white hover:bg-blue-600">
+                    Go
+                </button>
+            </form>
+        </div>
+    </div>
+
+</nav>
+
+<!-- Search Bar -->
+<div class="hidden bg-gray-100 py-4" id="search-bar">
+    <form class="container mx-auto flex items-center" action="{% url 'search' %}" method="get">
+        <input type="text" name="search_word" placeholder="Search..."
+               class="px-4 py-2 w-full rounded-md focus:outline-none border border-gray-300">
+        <button type="submit" class="bg-blue-500 px-4 py-2 rounded-md text-white hover:bg-blue-600 ml-2">
+            Search
+        </button>
+    </form>
+</div>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <!-- Column 1 -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Minishop</h2>
+                <p class="text-gray-400">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                <div class="flex space-x-4 mt-5">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <!-- Column 2 -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Menu</h2>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-white">Shop</a></li>
+                    <li><a href="#" class="hover:text-white">About</a></li>
+                    <li><a href="#" class="hover:text-white">Journal</a></li>
+                    <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- Column 3 -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Help</h2>
+                <div class="flex space-x-8">
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Shipping Information</a></li>
+                        <li><a href="#" class="hover:text-white">Returns & Exchange</a></li>
+                        <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Column 4 -->
+            <div>
+                <h2 class="text-xl font-bold mb-4">Have a Questions?</h2>
+                <ul class="space-y-4 text-gray-400">
+                    <li>
+                        <span class="inline-block w-6 text-center"><i class="fas fa-map-marker-alt"></i></span>
+                        203 Fake St. Mountain View, San Francisco, California, USA
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white">
+                            <span class="inline-block w-6 text-center"><i class="fas fa-phone"></i></span>
+                            +2 392 3929 210
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-white">
+                            <span class="inline-block w-6 text-center"><i class="fas fa-envelope"></i></span>
+                            info@yourdomain.com
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center border-t border-gray-600 pt-6">
+            <p class="text-gray-400">
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+                <i class="text-red-500 fas fa-heart"></i> by <a href="https://colorlib.com" target="_blank" class="hover:underline">Colorlib</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- JavaScript -->
+<script>
+    // Toggle mobile menu
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Toggle categories dropdown for desktop
+    document.getElementById('categoriesButton').addEventListener('click', function() {
+        document.getElementById('categoriesMenu').classList.toggle('hidden');
+    });
+
+    // Toggle categories dropdown for mobile
+    document.getElementById('categoriesButton-mobile').addEventListener('click', function() {
+        document.getElementById('categoriesMenu-mobile').classList.toggle('hidden');
+    });
+
+    // Toggle search bar visibility
+    document.getElementById('search-toggle').addEventListener('click', function() {
+        document.getElementById('search-bar').classList.toggle('hidden');
+    });
+
+    // Toggle search bar visibility for mobile
+document.getElementById('search-toggle-mobile').addEventListener('click', function() {
+    document.getElementById('mobile-search-bar').classList.toggle('hidden');
+});
+</script>
+</body>
+</html>

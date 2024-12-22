@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="bg-gray-100 py-8">
+    {% if no_results_message %}
+    <section class="text-center py-10 bg-gray-50">
+        <div class="max-w-screen-lg mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Search Results</h1>
+            <p class="text-gray-600 text-lg">{{ no_results_message }}</p>
+        </div>
+    </section>
+
+    {% elif search_products %}
+
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-semibold text-gray-800">New Shoes Arrival</h2>
+            <p class="text-gray-600 mt-2">Discover the latest collection of stylish and comfortable shoes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for j in search_products %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <a href="{{ j.get_url }}" class="block relative">
+                    <img class="w-full h-64 object-cover" src="{{ j.image.url }}" alt="{{ j.name }}">
+                    <div class="absolute inset-0 bg-black bg-opacity-25 hover:bg-opacity-50 transition-opacity"></div>
+                </a>
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-gray-500">{{ j.category }}</span>
+                        <div class="flex text-yellow-500">
+                            <span class="material-icons">star</span>
+                            <span class="material-icons">star</span>
+                            <span class="material-icons">star</span>
+                            <span class="material-icons">star</span>
+                            <span class="material-icons">star_border</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <a href="{{ j.get_url }}" class="hover:text-blue-600">{{ j.name }}</a>
+                    </h3>
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-600">Stock: <span class="font-bold">{{ j.stock }}</span></p>
+                        <p class="text-lg font-semibold text-gray-800">$<span>{{ j.price }}</span></p>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <a href="{% url 'add_cart' j.pk %}" class="flex-1 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 text-center">Add to Cart</a>
+                        <a href="#" class="flex-1 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 text-center">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex justify-center mt-10">
+            <nav class="flex space-x-2">
+                {% if search_products.has_previous %}
+                <a href="?page={{ search_products.previous_page_number }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">&lt;</a>
+                {% endif %}
+
+                {% for i in search_products.paginator.page_range %}
+                <a href="?page={{ i }}" class="px-4 py-2 {% if i == search_products.number %}bg-blue-500 text-white{% else %}bg-gray-300 text-gray-800{% endif %} rounded hover:bg-gray-400">{{ i }}</a>
+                {% endfor %}
+
+                {% if search_products.has_next %}
+                <a href="?page={{ search_products.next_page_number }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">&gt;</a>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+
+    {% endif %}
+</section>
+{% endblock %}

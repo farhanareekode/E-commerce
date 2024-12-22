@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="bg-cover bg-center py-16" style="background-image: url({% static 'images/bg_6.jpg' %});">
+    <div class="container mx-auto text-center">
+        <div class="text-white">
+            <p class="text-sm md:text-base"><a href="index.html" class="text-white underline">Home</a> > <span>Checkout</span></p>
+            <h1 class="text-3xl md:text-5xl font-bold">Bank Checkout Form</h1>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section py-10 flex justify-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 ftco-animate bg-white p-8 rounded-lg shadow-xl">
+                <form action="{% url 'payments' %}" method="post" class="billing-form">
+                    {% csrf_token %}
+                    <h3 class="mb-4 text-2xl font-semibold text-center text-gray-700">Bank Details</h3>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }} text-center text-sm py-2 px-4 rounded-md bg-red-100 text-red-700 my-2">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="account_number" class="block text-sm font-medium text-gray-700">Account No</label>
+                            <input type="number" id="account_number" class="form-control border border-gray-300 p-3 rounded-md w-full" name="account_number"
+                                   value="{{ payment.account_number }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ifc_code" class="block text-sm font-medium text-gray-700">IFC Code</label>
+                            <input type="text" id="ifc_code" class="form-control border border-gray-300 p-3 rounded-md w-full" name="ifc_code"
+                                   value="{{ payment.ifc_code }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="name" class="form-control border border-gray-300 p-3 rounded-md w-full" name="name"
+                                   value="{{ payment.name }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expiry_month" class="block text-sm font-medium text-gray-700">Expiration Month</label>
+                            <input type="text" id="expiry_month" class="form-control border border-gray-300 p-3 rounded-md w-full" name="expiry_month"
+                                   value="{{ payment.expiry_month }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expiry_year" class="block text-sm font-medium text-gray-700">Year</label>
+                            <input type="number" id="expiry_year" class="form-control border border-gray-300 p-3 rounded-md w-full" name="expiry_year"
+                                   value="{{ payment.expiry_year }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                            <input type="number" id="cvv" class="form-control border border-gray-300 p-3 rounded-md w-full" name="cvv"
+                                   value="{{ payment.cvv }}" required>
+                        </div>
+
+                    </div>
+                    <div class="col-12 mt-6">
+                        <div class="form-group text-center mx-auto">
+                            <input class="btn bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" type="submit" value="Submit">
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- .col-md-8 -->
+        </div>
+    </div>
+</section>
+{% endblock %}

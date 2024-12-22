@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">Our Story</h2>
+            <p class="text-lg text-gray-600">We are a passionate team of innovators dedicated to bringing the best products and services to our customers. Established in 1995, we have been leading the industry with our commitment to quality and customer satisfaction.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex justify-center items-center bg-white p-6 shadow-xl rounded-lg transition-transform transform hover:scale-105">
+                <div class="text-center">
+                    <div class="text-4xl text-blue-500 mb-4">
+                        <span class="flaticon-bag"></span>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Free Shipping</h3>
+                    <p class="text-gray-600">Enjoy free shipping on all orders, with no minimum required. We strive to deliver your orders in the fastest and most efficient way possible.</p>
+                </div>
+            </div>
+            <div class="flex justify-center items-center bg-white p-6 shadow-xl rounded-lg transition-transform transform hover:scale-105">
+                <div class="text-center">
+                    <div class="text-4xl text-blue-500 mb-4">
+                        <span class="flaticon-customer-service"></span>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">24/7 Support</h3>
+                    <p class="text-gray-600">Our customer support team is always available to assist you. Whether you need help with a product or have an inquiry, we're here for you round the clock.</p>
+                </div>
+            </div>
+            <div class="flex justify-center items-center bg-white p-6 shadow-xl rounded-lg transition-transform transform hover:scale-105">
+                <div class="text-center">
+                    <div class="text-4xl text-blue-500 mb-4">
+                        <span class="flaticon-payment-security"></span>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Secure Payments</h3>
+                    <p class="text-gray-600">All transactions are processed securely using the latest encryption technology, so you can shop with peace of mind.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-white">
+    <div class="container mx-auto flex items-center">
+        <div class="w-full md:w-1/2 relative bg-cover bg-center" style="background-image: url({% static 'images/about.jpg' %}); height: 500px;">
+            <a href="https://vimeo.com/45830194" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-16 h-16 rounded-full bg-blue-500 text-white text-3xl shadow-xl transition-transform transform hover:scale-110">
+                <span class="icon-play"></span>
+            </a>
+        </div>
+        <div class="w-full md:w-1/2 py-6 md:py-12 pl-4 md:pl-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
+            <p class="mb-4 text-gray-600">Our mission is to provide top-notch products and services that exceed customer expectations. We believe in innovation, integrity, and sustainability in all our operations.</p>
+            <p class="mb-4 text-gray-600">Our goal is to be the leading brand in the industry, recognized for our quality, customer-centric approach, and commitment to delivering value at every step.</p>
+            <a href="#" class="inline-block px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out">Shop now</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-gray-200">
+    <div class="container mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800">Our Services</h2>
+            <p class="text-lg text-gray-600">We offer a wide range of services designed to meet the needs of our diverse clientele. From product development to customer support, we aim to provide the highest level of service.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="w-full flex flex-col bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl text-blue-500 mr-4">
+                        <span class="flaticon-bag"></span>
+                    </div>
+                    <div class="text-lg font-semibold text-gray-800">Product Development</div>
+                </div>
+                <p class="text-gray-600">We help bring your ideas to life with our expert product development services. From ideation to prototyping, we are with you every step of the way.</p>
+            </div>
+            <div class="w-full flex flex-col bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl text-blue-500 mr-4">
+                        <span class="flaticon-heart-box"></span>
+                    </div>
+                    <div class="text-lg font-semibold text-gray-800">Customer Support</div>
+                </div>
+                <p class="text-gray-600">Our customer support team is dedicated to helping you solve any issues you may encounter. Reach out to us 24/7, and we’ll ensure that you get the assistance you need.</p>
+            </div>
+            <div class="w-full flex flex-col bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl text-blue-500 mr-4">
+                        <span class="flaticon-payment-security"></span>
+                    </div>
+                    <div class="text-lg font-semibold text-gray-800">Consultation Services</div>
+                </div>
+                <p class="text-gray-600">Our team of experts offers consulting services to help you optimize processes, solve problems, and achieve your goals effectively.</p>
+            </div>
+            <div class="w-full flex flex-col bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl text-blue-500 mr-4">
+                        <span class="flaticon-payment-security"></span>
+                    </div>
+                    <div class="text-lg font-semibold text-gray-800">Consultation Services</div>
+                </div>
+                <p class="text-gray-600">Our team of experts offers consulting services to help you optimize processes, solve problems, and achieve your goals effectively.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-gray-300">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Satisfied Customers Say</h2>
+        <p class="mb-8 text-gray-600">Here’s what our clients are saying about us. We take pride in providing exceptional service and building long-lasting relationships.</p>
+        <div class="owl-carousel owl-theme">
+            <div class="item">
+                <div class="bg-white p-8 shadow-lg rounded-lg text-center transform transition-transform hover:scale-105">
+                    <div class="w-16 h-16 rounded-full mx-auto mb-4" style="background-image: url({% static 'images/person_1.jpg' %}); background-size: cover;"></div>
+                    <p class="text-lg mb-4 text-gray-600">"This company has changed the way we do business. The quality of their products is unmatched, and their customer service is outstanding."</p>
+                    <p class="font-semibold text-gray-800">Garreth Smith</p>
+                    <p class="text-sm text-gray-500">Marketing Manager</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="bg-white p-8 shadow-lg rounded-lg text-center transform transition-transform hover:scale-105">
+                    <div class="w-16 h-16 rounded-full mx-auto mb-4" style="background-image: url({% static 'images/person_2.jpg' %}); background-size: cover;"></div>
+                    <p class="text-lg mb-4 text-gray-600">"The team was fantastic to work with, and they helped us create a product that exceeded our expectations. Highly recommended!"</p>
+                    <p class="font-semibold text-gray-800">Linda Williams</p>
+                    <p class="text-sm text-gray-500">Interface Designer</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="bg-white p-8 shadow-lg rounded-lg text-center transform transition-transform hover:scale-105">
+                    <div class="w-16 h-16 rounded-full mx-auto mb-4" style="background-image: url({% static 'images/person_3.jpg' %}); background-size: cover;"></div>
+                    <p class="text-lg mb-4 text-gray-600">"An excellent experience from start to finish. The team’s expertise and dedication made all the difference. We will definitely work with them again."</p>
+                    <p class="font-semibold text-gray-800">James Thomas</p>
+                    <p class="text-sm text-gray-500">UI Designer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe Payment</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+<div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+  <h1 class="text-2xl font-bold mb-6 text-center text-gray-700">Stripe Payment</h1>
+
+  <form id="payment-form">
+    <div id="card-element" class="border border-gray-300 p-3 rounded mb-4"></div>
+    <div id="card-errors" class="text-red-500 text-sm mb-4" role="alert"></div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="hidden text-center mb-4">
+      <div class="animate-spin border-t-4 border-blue-500 border-solid rounded-full w-8 h-8 mx-auto mb-2"></div>
+      <p class="text-gray-600">Processing payment...</p>
+    </div>
+
+    <!-- Success or Error Message -->
+    <div id="payment-status" class="hidden text-center mb-4">
+      <p id="status-message" class="text-lg font-semibold"></p>
+      <a href="{% url 'stripe_payment_success' %}" class="text-blue-500 hover:underline">Go back to Home</a>
+    </div>
+
+    <button type="submit" id="submit"
+            class="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition duration-300">
+      Pay $50
+    </button>
+  </form>
+</div>
+
+<script>
+  const stripe = Stripe("{{ stripe_publishable_key }}");
+  const elements = stripe.elements();
+  const card = elements.create('card', { style: { base: { fontSize: '16px' } } });
+  card.mount('#card-element');
+
+  const form = document.getElementById('payment-form');
+  const loadingSpinner = document.getElementById('loading-spinner');
+  const paymentStatus = document.getElementById('payment-status');
+  const statusMessage = document.getElementById('status-message');
+  const submitButton = document.getElementById('submit');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Show the loading spinner and disable the submit button
+    loadingSpinner.classList.remove('hidden');
+    submitButton.disabled = true;
+
+    const {paymentMethod, error} = await stripe.createPaymentMethod({
+        type: 'card',
+        card: card,
+    });
+
+    if (error) {
+        document.getElementById('card-errors').textContent = error.message;
+        loadingSpinner.classList.add('hidden'); // Hide spinner
+        submitButton.disabled = false; // Enable the button again
+    } else {
+        fetch("{% url 'stripe_payment' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({'payment_method_id': paymentMethod.id})
+        }).then(response => response.json()).then(data => {
+            loadingSpinner.classList.add('hidden'); // Hide spinner
+            submitButton.disabled = false; // Enable the button again
+
+            if (data.success) {
+                // Show the success message and redirect to home
+                statusMessage.textContent = "Payment successful!";
+                paymentStatus.classList.remove('hidden');
+                window.location.href = data.redirect_url;  // Redirect on success
+            } else {
+                // Show the error message
+                statusMessage.textContent = "Payment failed: " + data.error;
+                paymentStatus.classList.remove('hidden');
+            }
+        });
+    }
+  });
+</script>
+
+</body>
+</html>

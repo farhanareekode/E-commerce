@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_6.jpg' %});">
+    <div class="container mx-auto text-center py-16">
+        <div class="breadcrumbs text-gray-200 text-sm">
+            <a href="index.html" class="mr-2 text-white hover:text-gray-300">Home</a>
+            <span class="text-gray-300">/</span>
+            <span class="ml-2 text-white">Register</span>
+        </div>
+        <h1 class="text-4xl text-white font-bold mt-4">Register</h1>
+    </div>
+</div>
+
+<section class="bg-gray-100 py-16">
+    <div class="container mx-auto">
+        <!-- Popup -->
+        <div id="warningPopup" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+            <div class="bg-white rounded-lg p-8 shadow-lg text-center w-3/4 max-w-md">
+                <p class="text-red-600 font-medium">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </p>
+                <button onclick="closePopup()" class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none">
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <form action="register" method="POST" class="space-y-6">
+                {% csrf_token %}
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <input type="text" name="first_name" placeholder="Your First Name"
+                               class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <input type="text" name="last_name" placeholder="Your Last Name"
+                               class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div>
+                    <input type="text" name="username" placeholder="User Name"
+                           class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <input type="email" name="email" placeholder="Your Email"
+                           class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <input type="password" name="password1" placeholder="Password"
+                           class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <input type="password" name="password2" placeholder="Confirm Password"
+                           class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="text-center">
+                    <button type="submit"
+                            class="w-full py-3 px-5 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to open the popup
+    function openPopup() {
+        document.getElementById("warningPopup").classList.remove("hidden");
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById("warningPopup").classList.add("hidden");
+    }
+
+    // Open the popup if there are messages
+    {% if messages %}
+        openPopup();
+    {% endif %}
+</script>
+
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="bg-cover bg-center py-16" style="background-image: url({% static 'images/bg_6.jpg' %});">
+    <div class="container mx-auto text-center">
+        <div class="text-white">
+            <p class="text-sm md:text-base"><a href="index.html" class="text-white underline">Home</a> > <span>Login</span></p>
+            <h1 class="text-3xl md:text-5xl font-bold">Login</h1>
+        </div>
+    </div>
+</div>
+
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto">
+        <div class="flex justify-center items-center">
+            <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                <form action="login" method="POST" class="space-y-6">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <input
+                                type="text"
+                                name="username"
+                                placeholder="Username"
+                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        >
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input
+                                type="submit"
+                                value="Login"
+                                class="w-full bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                        >
+                    </div>
+
+                    <div class="form-group text-center">
+                        <a href="{% url 'password_reset' %}" class="text-blue-500 hover:underline">
+                            Forgot password?
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Warning Popup -->
+{% if messages %}
+<div
+        id="warningPopup"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm">
+        <p id="popupMessage" class="text-gray-800">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </p>
+        <button
+                onclick="closePopup()"
+                class="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none">
+            Close
+        </button>
+    </div>
+</div>
+{% endif %}
+<section class="bg-gray-100 py-10">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Free Shipping -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-shipping-fast text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Free Shipping</h3>
+                <p class="text-gray-600 text-sm">Enjoy free shipping on all orders, no minimum purchase required.</p>
+            </div>
+            <!-- 24/7 Support -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-headset text-green-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">24/7 Support</h3>
+                <p class="text-gray-600 text-sm">Our support team is available 24/7 to assist you with your needs.</p>
+            </div>
+            <!-- Secure Payments -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-lock text-red-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Secure Payments</h3>
+                <p class="text-gray-600 text-sm">Your payments are 100% safe and secured with us.</p>
+            </div>
+            <!-- Fast Delivery -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-truck text-yellow-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Fast Delivery</h3>
+                <p class="text-gray-600 text-sm">Experience quick and efficient delivery of your orders.</p>
+            </div>
+            <!-- Easy Returns -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-undo-alt text-purple-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Easy Returns</h3>
+                <p class="text-gray-600 text-sm">Hassle-free returns within 30 days of purchase.</p>
+            </div>
+            <!-- Exclusive Offers -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-tags text-orange-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Exclusive Offers</h3>
+                <p class="text-gray-600 text-sm">Access special discounts and deals available only to members.</p>
+            </div>
+            <!-- Quality Assurance -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-check-circle text-teal-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Quality Assurance</h3>
+                <p class="text-gray-600 text-sm">All products are inspected to ensure the highest quality.</p>
+            </div>
+            <!-- Loyalty Rewards -->
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full mb-4">
+                    <i class="fas fa-gift text-pink-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Loyalty Rewards</h3>
+                <p class="text-gray-600 text-sm">Earn points and redeem rewards for every purchase.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to open the popup
+    function openPopup() {
+        document.getElementById("warningPopup").classList.remove("hidden");
+    }
+
+    // Function to close the popup and clear message content
+    function closePopup() {
+        document.getElementById("warningPopup").classList.add("hidden");
+        document.getElementById("popupMessage").innerText = ""; // Clear message content after closing
+    }
+
+    // Check for messages on page load and open popup if messages exist
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const popupMessage = document.getElementById("popupMessage").innerText.trim();
+        if (popupMessage) {
+            openPopup();
+        }
+    });
+</script>
+
+{% endblock %}

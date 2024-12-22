@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      color: #343a40;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .details {
+      margin-bottom: 8px;
+    }
+
+   .details div {
+    display: flex;
+    justify-content: flex-start; /* Align everything to the left */
+    margin-bottom: 8px;
+  }
+
+  .details span:first-child {
+    margin-right: 20px; /* Add space between the label and the value */
+    font-weight: bold; /* Make the label bold for better distinction */
+    min-width: 150px; /* Optional: Set a minimum width for labels to align consistently */
+  }
+
+  .details span:last-child {
+    flex: 1; /* Allow the value to take the remaining space */
+  }
+
+
+    .details span {
+      color: #495057;
+      font-weight: bold;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+      margin-right: 10px;
+      margin-bottom:10px;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    .total {
+      font-size: 20px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .alert {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Payment Invoice</h1>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <h3>Amount</h3>
+      <p class="total">&#8377; {{ amount }}</p>
+    </div>
+
+    {% if error %}
+    <div class="alert">
+      Error: {{ error }}
+    </div>
+    {% endif %}
+
+    <div class="section">
+      <h3>Checkout Details</h3>
+      <div class="details">
+        <div><span>First Name:</span><span>{{ checkout.firstname }}</span></div>
+        <div><span>Last Name:</span><span>{{ checkout.lastname }}</span></div>
+        <div><span>Country:</span><span>{{ checkout.country }}</span></div>
+        <div><span>Address:</span><span>{{ checkout.address }}</span></div>
+        <div><span>Town/City:</span><span>{{ checkout.town_city }}</span></div>
+        <div><span>Postcode/ZIP:</span><span>{{ checkout.postcode_zip }}</span></div>
+        <div><span>Phone:</span><span>{{ checkout.phone }}</span></div>
+        <div><span>Email:</span><span>{{ checkout.email }}</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Payment Details</h3>
+      <div class="details">
+        <div><span>Account Number:</span><span>{{ payment.account_number }}</span></div>
+        <div><span>IFC Code:</span><span>{{ payment.ifc_code }}</span></div>
+        <div><span>Name:</span><span>{{ payment.name }}</span></div>
+        <div><span>Expiry Month:</span><span>{{ payment.expiry_month }}</span></div>
+        <div><span>Expiry Year:</span><span>{{ payment.expiry_year }}</span></div>
+        <div><span>CVV:</span><span>{{ payment.cvv }}</span></div>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <form action="{% url 'payment_success' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="razorpay-button" class="btn btn-primary">Pay Now</button>
+      </form>
+
+      <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">Cash on Delivery</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var razorpayOptions = {
+    key: "{{ razorpay_key }}",  // Razorpay Key ID
+    amount: "{{ amount }}",     // Amount in paise
+    currency: "{{ currency }}", // Currency (e.g., INR)
+    name: "MIN SHOP",
+    description: "Test Transaction",
+    image: "https://your_logo_url.com/logo.png",
+    order_id: "{{ razorpay_order_id }}",  // Razorpay Order ID
+    prefill: {
+      name: "{{ user.username }}",
+      email: "{{ user.email }}"
+    },
+    theme: {
+      color: "#F37254"
+    },
+    handler: function (response) {
+      alert("Payment successful: " + response.razorpay_payment_id);
+      window.location.href = "payment_success";
+    },
+    modal: {
+      ondismiss: function() {
+        alert("The payment process was cancelled.");
+      }
+    }
+  };
+
+  document.getElementById('razorpay-button').onclick = function(e) {
+    var rzp = new Razorpay(razorpayOptions);
+    rzp.open();
+    e.preventDefault();
+  };
+</script>
+</body>
+</html>

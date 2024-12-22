@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="bg-cover bg-center py-16" style="background-image: url({% static 'images/bg_6.jpg' %});">
+    <div class="container mx-auto text-center">
+        <div class="text-white">
+            <p class="text-sm md:text-base"><a href="index.html" class="text-white underline">Home</a> > <span>Checkout</span></p>
+            <h1 class="text-3xl md:text-5xl font-bold">Checkout</h1>
+        </div>
+    </div>
+</div>
+<section class="ftco-section py-10 bg-gray-100 flex justify-center">
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-xl-8 ftco-animate">
+                <form action="{% url 'checkout' %}" method="post" class="billing-form bg-white p-8 rounded-lg shadow-xl space-y-6 mx-auto">
+                    {% csrf_token %}
+                    <h3 class="mb-4 billing-heading text-center text-2xl font-semibold text-gray-700">Billing/Shipping Details</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="fname" class="form-control border border-gray-300 p-3 rounded-md w-full" name="fname"
+                                   value="{{ checkout.firstname|default:'' }}" placeholder="Enter your first name" required>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lname" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="lname" class="form-control border border-gray-300 p-3 rounded-md w-full" name="name"
+                                   value="{{ checkout.lastname|default:'' }}" placeholder="Enter your last name" required>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="form-group col-span-2">
+                            <label for="country" class="block text-sm font-medium text-gray-700">State / Country</label>
+                            <input type="text" id="country" class="form-control border border-gray-300 p-3 rounded-md w-full" name="country"
+                                   value="{{ checkout.country|default:'' }}" placeholder="Enter your country" required>
+                        </div>
+
+                        <!-- Street Address -->
+                        <div class="form-group">
+                            <label for="address" class="block text-sm font-medium text-gray-700">Street Address</label>
+                            <input type="text" id="address" class="form-control border border-gray-300 p-3 rounded-md w-full" name="address"
+                                   value="{{ checkout.address|default:'' }}" placeholder="Enter your street address" required>
+                        </div>
+
+                        <!-- Optional Apartment Address -->
+                        <div class="form-group">
+                            <label for="apartment" class="block text-sm font-medium text-gray-700">Apartment, suite, unit (optional)</label>
+                            <input type="text" id="apartment" class="form-control border border-gray-300 p-3 rounded-md w-full"
+                                   placeholder="Apartment, suite, unit (optional)">
+                        </div>
+
+                        <!-- Town/City -->
+                        <div class="form-group">
+                            <label for="city" class="block text-sm font-medium text-gray-700">Town / City</label>
+                            <input type="text" id="city" class="form-control border border-gray-300 p-3 rounded-md w-full" name="city"
+                                   value="{{ checkout.town_city|default:'' }}" placeholder="Enter your city" required>
+                        </div>
+
+                        <!-- ZIP/Postcode -->
+                        <div class="form-group">
+                            <label for="pin" class="block text-sm font-medium text-gray-700">Postcode / ZIP</label>
+                            <input type="text" id="pin" class="form-control border border-gray-300 p-3 rounded-md w-full" name="pin"
+                                   value="{{ checkout.postcode_zip|default:'' }}" placeholder="Enter your ZIP/postcode" required>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                            <input type="text" id="phone" class="form-control border border-gray-300 p-3 rounded-md w-full" name="phone"
+                                   value="{{ checkout.phone|default:'' }}" placeholder="Enter your phone number" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" id="email" class="form-control border border-gray-300 p-3 rounded-md w-full" name="email"
+                                   value="{{ checkout.email|default:'' }}" placeholder="Enter your email address" required>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary -->
+                    <div class="cart-summary mt-6 md:mt-10 bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="billing-heading mb-4 text-lg font-semibold text-gray-700">Cart Total</h3>
+                        <p class="d-flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span>${{ total }}</span>
+                        </p>
+                        <p class="d-flex justify-between text-gray-600">
+                            <span>Delivery</span>
+                            <span>$0.00</span>
+                        </p>
+                        <p class="d-flex justify-between text-gray-600">
+                            <span>Discount</span>
+                            <span>$3.00</span>
+                        </p>
+                        <hr class="my-3 border-gray-300">
+                        <p class="d-flex justify-between font-bold text-gray-800">
+                            <span>Total</span>
+                            <span>${{ total }}</span>
+                        </p>
+                        <p class="text-center mt-4">
+                            <input class="btn bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" type="submit" value="Checkout">
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

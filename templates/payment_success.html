@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Success</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Success Page Container -->
+<div class="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10">
+  <!-- Success Header -->
+  <div class="text-center mb-6">
+    <h2 class="text-3xl font-semibold text-green-600">Payment Successful!</h2>
+    <p class="text-lg text-gray-600 mt-2">Thank you for your payment. Your transaction has been completed successfully.</p>
+  </div>
+
+  <!-- Payment Details -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow-sm mb-6">
+    <h3 class="text-2xl font-semibold mb-4">Payment Details</h3>
+    <table class="min-w-full table-auto">
+      <tbody>
+      <tr>
+        <td class="py-2 px-4 text-gray-700">Transaction ID:</td>
+        <td class="py-2 px-4 text-gray-900">{{ transaction_id }}</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-4 text-gray-700">Amount Paid:</td>
+        <td class="py-2 px-4 text-gray-900">{{ amount_paid }}</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-4 text-gray-700">Payment Date:</td>
+        <td class="py-2 px-4 text-gray-900">{{ payment_date }}</td>
+      </tr>
+      {% for product in products %}
+      <tr>
+        <td class="py-2 px-4 text-gray-700">Product Name:</td>
+        <td class="py-2 px-4 text-gray-900">{{ product.product.name }}</td>
+      </tr>
+      <tr>
+        <td class="py-2 px-4 text-gray-700">Quantity:</td>
+        <td class="py-2 px-4 text-gray-900">{{ product.quantity }}</td>
+      </tr>
+
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-sm mt-6">
+    </div>
+
+
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex justify-between">
+    <!-- Go to Home Button -->
+    <a href="{% url 'home' %}" class="no-print px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+      Go to Home
+    </a>
+
+    <!-- Print Bill Button -->
+    <button onclick="window.print()" class="no-print px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+      Print Bill
+    </button>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+{{ block.super }} <!-- Keeps default admin tools like "Add Contact" -->
+<a class="button" href="{{ download_excel_url }}">Download Excel</a>
+<a class="button" href="{{ download_pdf_url }}">Download PDF</a>
+{% endblock %}

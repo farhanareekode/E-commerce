@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="py-12 bg-gray-100">
+	<div class="container mx-auto px-6">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+			<!-- Main Blog Entries -->
+			<div class="lg:col-span-2">
+				<div class="space-y-8">
+
+					<!-- Blog Entry 1 -->
+					<div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
+						<div class="w-full md:w-1/2">
+							<a href="" class="block h-64 bg-cover bg-center" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
+						</div>
+						<div class="p-6">
+							<div class="mb-3 text-sm text-gray-600">
+								<span class="mr-4"><a href="#">April 9, 2019</a></span>
+								<span class="mr-4"><a href="#">Admin</a></span>
+								<span><a href="#" class="text-gray-600"><span class="icon-chat"></span> 3 Comments</a></span>
+							</div>
+							<h3 class="text-xl font-semibold mb-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+							<p class="text-gray-700 mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts...</p>
+							<a href="" class="inline-block text-blue-500 hover:text-blue-700"></a>
+						</div>
+					</div>
+
+					<!-- Blog Entry 2 -->
+					<div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
+						<div class="w-full md:w-1/2">
+							<a href="" class="block h-64 bg-cover bg-center" style="background-image: url({% static 'images/image_2.jpg' %});"></a>
+						</div>
+						<div class="p-6">
+							<div class="mb-3 text-sm text-gray-600">
+								<span class="mr-4"><a href="#">April 9, 2019</a></span>
+								<span class="mr-4"><a href="#">Admin</a></span>
+								<span><a href="#" class="text-gray-600"><span class="icon-chat"></span> 3 Comments</a></span>
+							</div>
+							<h3 class="text-xl font-semibold mb-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
+							<p class="text-gray-700 mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts...</p>
+							<a href="" class="inline-block text-blue-500 hover:text-blue-700"></a>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="lg:col-span-1">
+				<div class="space-y-8">
+
+					<!-- Categories -->
+					<div class="bg-white p-6 rounded-lg shadow-lg">
+						<h3 class="text-xl font-semibold mb-4">Categories</h3>
+						<ul class="space-y-3 text-gray-700">
+							<li><a href="#" class="hover:text-blue-500">Shoes <span class="text-gray-500">(12)</span></a></li>
+							<li><a href="#" class="hover:text-blue-500">Men's Shoes <span class="text-gray-500">(22)</span></a></li>
+							<li><a href="#" class="hover:text-blue-500">Women's <span class="text-gray-500">(37)</span></a></li>
+							<li><a href="#" class="hover:text-blue-500">Accessories <span class="text-gray-500">(42)</span></a></li>
+						</ul>
+					</div>
+
+					<!-- Recent Posts -->
+					<div class="bg-white p-6 rounded-lg shadow-lg">
+						<h3 class="text-xl font-semibold mb-4">Recent Posts</h3>
+						<div class="flex items-center space-x-4">
+							<a href="#" class="w-20 h-20 bg-cover rounded-lg" style="background-image: url({% static 'images/image_1.jpg' %});"></a>
+							<div>
+								<h4 class="font-semibold text-lg"><a href="#" class="hover:text-blue-500">Even the all-powerful Pointing has no control about the blind texts</a></h4>
+								<p class="text-sm text-gray-500">April 27, 2019</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Tag Cloud -->
+					<div class="bg-white p-6 rounded-lg shadow-lg">
+						<h3 class="text-xl font-semibold mb-4">Tag Cloud</h3>
+						<div class="flex flex-wrap gap-2">
+							<a href="#" class="text-sm text-gray-600 hover:text-blue-500">shop</a>
+							<a href="#" class="text-sm text-gray-600 hover:text-blue-500">products</a>
+							<a href="#" class="text-sm text-gray-600 hover:text-blue-500">shirt</a>
+							<a href="#" class="text-sm text-gray-600 hover:text-blue-500">jeans</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
