@@ -204,39 +204,39 @@ def payment_success(request):
 
 
 
-# def stripe_payment(request):
-#     if request.method == "POST":
-#         try:
-#             data = json.loads(request.body)
-#             payment_method_id = data.get('payment_method_id')
-#
-#             if not payment_method_id:
-#                 return JsonResponse({'success': False, 'error': 'Payment method ID not provided'})
-#
-#             return_url = request.build_absolute_uri('/stripe_payment_success')
-#
-#             # Create the PaymentIntent
-#             intent = stripe.PaymentIntent.create(
-#                 amount=5000,  # Amount in cents ($50.00)
-#                 currency="usd",
-#                 payment_method=payment_method_id,
-#                 confirm=True,
-#                 return_url=return_url,
-#             )
-#
-#             # Payment successful
-#             if intent['status'] == 'succeeded':
-#                 return JsonResponse({'success': True, 'redirect_url': '/home/'})
-#             else:
-#                 return JsonResponse({'success': False, 'error': 'Payment confirmation incomplete.'})
-#
-#         except stripe.error.CardError as e:
-#             return JsonResponse({'success': False, 'error': str(e)})
-#     return render(
-#         request,
-#         "stripe_payment.html",
-#         {"stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY}
-#     )
+def stripe_payment(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            payment_method_id = data.get('payment_method_id')
+
+            if not payment_method_id:
+                return JsonResponse({'success': False, 'error': 'Payment method ID not provided'})
+
+            return_url = request.build_absolute_uri('/stripe_payment_success')
+
+            # Create the PaymentIntent
+            intent = stripe.PaymentIntent.create(
+                amount=5000,  # Amount in cents ($50.00)
+                currency="usd",
+                payment_method=payment_method_id,
+                confirm=True,
+                return_url=return_url,
+            )
+
+            # Payment successful
+            if intent['status'] == 'succeeded':
+                return JsonResponse({'success': True, 'redirect_url': '/home/'})
+            else:
+                return JsonResponse({'success': False, 'error': 'Payment confirmation incomplete.'})
+
+        except stripe.error.CardError as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return render(
+        request,
+        "stripe_payment.html",
+        {"stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY}
+    )
 
 
 def payment_success_print(request):
