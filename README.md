@@ -45,8 +45,7 @@ This project is a Django-based e-commerce web application hosted on AWS. The app
    
 2. **Create a virtual environment:**
 Run the following command to create a virtual environment:
-```
-python3 -m venv env`
+`python3 -m venv env`
 
    *Activate the virtual environment:*
    On Linux/macOS:
